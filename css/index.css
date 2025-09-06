@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0px;
+  font-weight: normal;
+  background-color: bisque;
+}
+.tituloPrincipal{
+    color: black;
+    text-align: center;
+    background-color: burlywood;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.formulario{
+  margin: 30px;
+  font-size: 30px;
+  align-content: center;
+  
+}
+
+.input,textarea{
+  border: 2px solid black;  
+  border-radius: 2px;       
+  padding: 5px;             
+  font-size: 10px;
+}
+
+input:focus, textarea:focus {
+  border-color: rgb(8, 85, 8);
+  outline: none; 
+}
+
+.guardar{
+  color: black;
+  width: 100px;
+  height: 40px;
+  background-color:burlywood;
+}
+input.fechaTarea {
+  border: 2px solid rgb(0, 0, 0);
+}
+input.nombreTarea{
+    border: 2px solid rgb(0, 0, 0);
+}
+
+
+
+
