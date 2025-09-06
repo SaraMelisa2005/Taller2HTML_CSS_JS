@@ -1,2 +1,2 @@
 # Taller2HTML_CSS_JS
-Taller Práctico de Desarrollo Web
+en esta rama se realiza la aplicación de un historial de tareas diarias
