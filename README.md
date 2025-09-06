@@ -1,2 +1,2 @@
 # Taller2HTML_CSS_JS
-Taller Práctico de Desarrollo Web
+Esta rama nos ofrece un juego divertido e interactivo que nos ayuda a mejorar nuestra memoria 
