@@ -85,3 +85,10 @@ function inicializar() {
 }
 //inicio
 inicializar();
+//crear e insertar el formulario en el contenedor
+//Guardar la tarea en localStorage en una clave unica
+//visualizar las tareas registradas y orden cronologico
+//elimar tareas
+//diferenciar las tareas completadas y las pendientes
+//buscador de tareas
+//total de tareas completadas y pendientes
