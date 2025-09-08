@@ -1,60 +1,58 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const btnRegistrar = document.getElementById("btnRegistrar");
-    const contenedor = document.getElementById("contenedorFormulario");
+//crea e inserta el formulario en el contenedor
+function crearFormulario(contenedor) {
+    contenedor.innerHTML = "";
 
-    btnRegistrar.addEventListener("click", function () {
+    //Titulo
+    const h1 = document.createElement(h1)
+    h1.textContent = "Bienvenidos al historial de sus tareas";
+    contenedor.appendChild(h1);
 
-        contenedor.innerHTML = `
-            <h1>Bienvenido al historial de sus tareas</h1>
-            <form id="formTarea">
-                <label>Ingresa la Fecha</label> <br>
-                <input type="date" name="fechaTarea" class="fechaTarea" required>
-                <br>
-                <label>Ingresa el nombre de la tarea</label> <br>
-                <input type="text" name="nombreTarea" class="nombreTarea" required>
-                <br>
-                <label>Agrega una pequeña descripción de la tarea</label> <br>
-                <textarea name="descripcionTarea" id="descripcionTarea" required></textarea>
-                <br>
-                <button type="submit">Guardar</button>
-            </form>
-        `;
-        const fecha = form.fechaTarea.value;
-        const nombre = form.nombreTarea.value;
-        const descripcion = form.descripcionTarea.value;
-        
+    //Formulario
+    const form = document.createElement("form");
+    form.id = "formTarea";
 
-        const locStor = (date, titulo, text) => {
-            const value = {
-                fecha: date,
-                titulo: titulo,
-                descripcion: text,
-            };
-        };
+    //campos del formulario
+    const labelFecha = document.createElement("label");
+    labelFecha.textContent = "Ingresa la Fecha";
+    const inputFecha = document.createElement("input");
+    inputFecha.type = "date";
+    inputFecha.name = "fechaTarea";
+    inputFecha.required = true;
 
+    const labelNombre = document.createElement("label");
+    labelNombre.textContent = "Ingresa el nombre de la tarea";
+    const inputNombre = document.createElement("input");
+    inputNombre.type = "text";
+    inputNombre.name = "nombreTarea";
+    inputNombre.required = true;
 
-        // const form = document.getElementById("formTarea");
-        // form.addEventListener("submit", function (event) {
-        //     event.preventDefault(); // Evita que se recargue la página
+    const labelDesc = document.createElement("label");
+    labelDesc.textContent = "Agrega una pequeña descipción de la tarea";
+    const textareaDec = document.createElement("textarea");
+    textareaDec.name = "descripcionTarea";
+    textareaDec.required = true;
 
-        //     // Obtener los datos del formulario
-        //     const fecha = form.fechaTarea.value;
-        //     const nombre = form.nombreTarea.value;
-        //     const descripcion = form.descripcionTarea.value;
+    //boton guardar
+    const btnGuardar = document.createElement("button");
+    btnGuardar.type = "submit";
+    btnGuardar.textContent = "Guardar";
 
-        //     // Puedes guardar o mostrar los datos aquí
-        //     console.log("Fecha:", fecha);
-        //     console.log("Nombre:", nombre);
-        //     console.log("Descripción:", descripcion);
+    //Montar elementos en el formulario
+    form.append(
+        labelFecha, document.createElement("br"),
+        inputFecha, document.createElement("br"),
+        labelNombre, document.createElement("br"),
+        inputNombre, document.createElement("br"),
+        labelDesc, document.createElement("br"),
+        textareaDec, document.createElement("br"),
+        btnGuardar
+    )
 
-        //     alert("Tarea guardada correctamente");
+    form.addEventListener("submit", (ev) =>
+        guardarTarea(ev, contenedor, inputFecha, inputNombre, textareaDec))
+    contenedor.appendChild(form);
+}
 
-        //     // Opcional: limpiar formulario
-        //     form.reset();
-        // });
-    });
-
-});
 
 
 
