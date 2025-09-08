@@ -3,7 +3,7 @@ function crearFormulario(contenedor) {
     contenedor.innerHTML = "";
 
     //Titulo
-    const h1 = document.createElement(h1)
+    const h1 = document.createElement(h1);
     h1.textContent = "Bienvenidos al historial de sus tareas";
     contenedor.appendChild(h1);
 
@@ -46,13 +46,42 @@ function crearFormulario(contenedor) {
         labelDesc, document.createElement("br"),
         textareaDec, document.createElement("br"),
         btnGuardar
-    )
+    );
 
     form.addEventListener("submit", (ev) =>
-        guardarTarea(ev, contenedor, inputFecha, inputNombre, textareaDec))
+        guardarTarea(ev, contenedor, inputFecha, inputNombre, textareaDec));
     contenedor.appendChild(form);
 }
+//Guardar la tarea en localStorage en una clave unica
+function guardarTarea(ev, contenedor, inputFecha, inputNombre, textareaDec){
+    ev.preventDefault();
+    //crear objeto tarea
+    const tarea = {
+        fecha: inputFecha.value,
+        nombre: inputNombre.value,
+        descripcion: textareaDec.value,
+        completada: false,
+    };
+    //calcular el proximo indice
+    const numTareas = Object.keys(localStorage)
+    .filter((k)=>k.startsWith("tarea"))
+    .length + 1;
 
-
-
-
+    const clave = "tarea" + numTareas;
+    //guardar en localStorage
+    localStorage.setItem(clave. JSON.stringify(tarea));
+    alert(`Tarea guardada correctamente como  ${clave}`);
+    //limpiar formulario y ocultar el contenedor 
+    ev.target.reset();
+    contenedor.innerHTML = "";
+}
+//inicializa los eventos al cargar la pagina
+function inicializar() {
+    const btnRegistrar = document.getElementById("btnRegistrar");
+    const contenedor = document.getElementById("contenedorFormulario");
+    btnRegistrar.addEventListener("click", () => {
+        crearFormulario(contenedor);
+    });
+}
+//inicio
+inicializar();
