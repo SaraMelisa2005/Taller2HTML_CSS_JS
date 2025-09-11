@@ -1,9 +1,9 @@
 //crea e inserta el formulario en el contenedor
 function crearFormulario(contenedor) {
-    contenedor.innerHTML = "";
+    contenedor.innerHTML = "";//para que tome que el resto es un html
 
     //Titulo
-    const h1 = document.createElement(h1);
+    const h1 = document.createElement("h1");
     h1.textContent = "Bienvenidos al historial de sus tareas";
     contenedor.appendChild(h1);
 
@@ -17,7 +17,7 @@ function crearFormulario(contenedor) {
     const inputFecha = document.createElement("input");
     inputFecha.type = "date";
     inputFecha.name = "fechaTarea";
-    inputFecha.required = true;
+    inputFecha.required = true;//verificacion de que el usuario llene el formulario
 
     const labelNombre = document.createElement("label");
     labelNombre.textContent = "Ingresa el nombre de la tarea";
@@ -55,6 +55,7 @@ function crearFormulario(contenedor) {
 //Guardar la tarea en localStorage en una clave unica
 function guardarTarea(ev, contenedor, inputFecha, inputNombre, textareaDec){
     ev.preventDefault();
+    //inicio de localstorage
     //crear objeto tarea
     const tarea = {
         fecha: inputFecha.value,
@@ -69,7 +70,7 @@ function guardarTarea(ev, contenedor, inputFecha, inputNombre, textareaDec){
 
     const clave = "tarea" + numTareas;
     //guardar en localStorage
-    localStorage.setItem(clave. JSON.stringify(tarea));
+    localStorage.setItem(clave, JSON.stringify(tarea));
     alert(`Tarea guardada correctamente como  ${clave}`);
     //limpiar formulario y ocultar el contenedor 
     ev.target.reset();
