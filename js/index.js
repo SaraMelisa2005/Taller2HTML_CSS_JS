@@ -87,7 +87,92 @@ function inicializar() {
 //inicio
 inicializar();
 //visualizar las tareas registradas y orden cronologico
-//elimar tareas
+// Función para guardar una tarea en localStorage
+function guardarTarea(ev, contenedor, inputFecha, inputNombre, textareaDec) {
+    ev.preventDefault();
+
+    const tarea = {
+        fecha: inputFecha.value,
+        nombre: inputNombre.value,
+        descripcion: textareaDec.value,
+        completada: false,
+    };
+
+    // Obtener el siguiente índice para la clave
+    const numTareas = Object.keys(localStorage)
+        .filter((k) => k.startsWith("tarea"))
+        .length + 1;
+
+    const clave = "tarea" + numTareas;
+
+    // Guardar la tarea en localStorage (corregido)
+    localStorage.setItem(clave, JSON.stringify(tarea));
+
+    alert(`Tarea guardada correctamente como ${clave}`);
+
+    ev.target.reset();
+    contenedor.innerHTML = "";
+
+    // Actualizar la visualización de tareas
+    mostrarTareas();
+}
+
+// Función para mostrar las tareas ordenadas por fecha
+function mostrarTareas() {
+    // Crear o seleccionar el contenedor donde mostrar las tareas
+    let contenedorTareas = document.getElementById("contenedorTareas");
+    if (!contenedorTareas) {
+        contenedorTareas = document.createElement("div");
+        contenedorTareas.id = "contenedorTareas";
+        document.body.appendChild(contenedorTareas);
+    }
+
+    contenedorTareas.innerHTML = ""; // Limpiar contenido previo
+
+    // Obtener todas las tareas de localStorage
+    const tareas = Object.keys(localStorage)
+        .filter((clave) => clave.startsWith("tarea"))
+        .map((clave) => JSON.parse(localStorage.getItem(clave)));
+
+    // Ordenar por fecha (de más antigua a más reciente)
+    tareas.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+
+    // Mostrar cada tarea
+    tareas.forEach((tarea, index) => {
+        const div = document.createElement("div");
+        div.style.border = "1px solid #ccc";
+        div.style.margin = "5px";
+        div.style.padding = "5px";
+
+        div.innerHTML = `
+            <strong>Fecha:</strong> ${tarea.fecha} <br>
+            <strong>Nombre:</strong> ${tarea.nombre} <br>
+            <strong>Descripción:</strong> ${tarea.descripcion} <br>
+            <strong>Completada:</strong> ${tarea.completada ? "Sí" : "No"}
+        `;
+
+        contenedorTareas.appendChild(div);
+    });
+}
+
+// Inicializar eventos y mostrar tareas al cargar la página
+function inicializar() {
+    const btnRegistrar = document.getElementById("btnRegistrar");
+    const contenedor = document.getElementById("contenedorFormulario");
+
+    btnRegistrar.addEventListener("click", () => {
+        crearFormulario(contenedor);
+    });
+
+    // Mostrar tareas guardadas al cargar la página
+    mostrarTareas();
+}
+
+// Llamar a inicializar al cargar el script
+inicializar();
+
 //diferenciar las tareas completadas y las pendientes
+//elimar tareas
 //buscador de tareas
 //total de tareas completadas y pendientes
+
