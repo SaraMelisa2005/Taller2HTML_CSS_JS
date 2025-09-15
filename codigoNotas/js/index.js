@@ -85,7 +85,7 @@ function guardarTarea(ev, contenedor, inputFecha, inputNombre, textareaDec) {
     // Guardar la tarea en localStorage (corregido)
     localStorage.setItem(clave, JSON.stringify(tarea));
 
-    alert(`Tarea guardada correctamente como ${clave}`);
+    alert(`fTarea guardada correctamente como ${clave}`);
 
     ev.target.reset();
     contenedor.innerHTML = "";
@@ -95,7 +95,7 @@ function guardarTarea(ev, contenedor, inputFecha, inputNombre, textareaDec) {
 }
 //visualizar las tareas registradas y orden cronologico
 // Función para mostrar las tareas ordenadas por fecha
-function mostrarTareas() {
+function mostrarTareas(filtro = "") {//se agrego el parametro
     // Crear o seleccionar el contenedor donde mostrar las tareas
     let contenedorTareas = document.getElementById("contenedorTareas");
     if (!contenedorTareas) {
@@ -107,12 +107,19 @@ function mostrarTareas() {
     contenedorTareas.innerHTML = ""; // Limpiar contenido previo
 
     // Obtener todas las tareas de localStorage
-    const tareas = Object.keys(localStorage)
+    let tareas = Object.keys(localStorage)
         .filter((clave) => clave.startsWith("tarea"))
         .map((clave) => JSON.parse(localStorage.getItem(clave)));
 
     // Ordenar por fecha (de más antigua a más reciente)
     tareas.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+    // // Filtrar si hay texto de búsqueda
+    if (filtro) {
+        tareas = tareas.filter((tarea) =>
+            tarea.nombre.toLowerCase().includes(filtro) ||
+            tarea.descripcion.toLowerCase().includes(filtro)
+        );
+    }
 
     // Mostrar cada tarea
     tareas.forEach((tarea, index) => {
@@ -149,18 +156,54 @@ function mostrarTareas() {
 });
    
 }
+//funcion crear barra de busquedas por nombre
+function crearBuscador() {
+    // Verificar si ya existe para no duplicarlo
+    let contenedorBuscador = document.getElementById("contenedorBuscador");
+    if (contenedorBuscador) return; // ya existe, no lo crea de nuevo
+
+    // Crear el contenedor
+    contenedorBuscador = document.createElement("div");
+    contenedorBuscador.id = "contenedorBuscador";
+
+    // Título
+    const titulo = document.createElement("h2");
+    titulo.textContent = "Buscar tareas";
+
+    // Input de búsqueda
+    const inputBuscar = document.createElement("input");
+    inputBuscar.type = "text";
+    inputBuscar.placeholder = "Escribe para filtrar tareas...";
+
+    // Insertar todo en el contenedor
+    contenedorBuscador.appendChild(titulo);
+    contenedorBuscador.appendChild(inputBuscar);
+
+    // Insertarlo en la página, antes de la lista de tareas
+    document.body.insertBefore(contenedorBuscador, document.getElementById("contenedorTareas"));
+
+    // Agregar evento: cada vez que escriba, filtramos
+    inputBuscar.addEventListener("input", (ev) => {
+        const texto = ev.target.value.toLowerCase();
+        mostrarTareas(texto); // pasamos el texto a mostrarTareas
+    });
+}
+
 
 // Inicializar eventos y mostrar tareas al cargar la página
 function inicializar() {
     const btnRegistrar = document.getElementById("btnRegistrar");
     const contenedor = document.getElementById("contenedorFormulario");
-
+    
     btnRegistrar.addEventListener("click", () => {
         crearFormulario(contenedor);
     });
+    //llama a la funcion buscar
+    crearBuscador();   
 
     // Mostrar tareas guardadas al cargar la página
     mostrarTareas();
+    
 }
 
 // Llamar a inicializar al cargar el script
@@ -168,5 +211,5 @@ inicializar();
 
 //diferenciar las tareas completadas y las pendientes
 
-//buscador de tareas
-//total de tareas completadas y pendientes
+
+//total de tareas completadas y pendientes
