@@ -52,30 +52,7 @@ function crearFormulario(contenedor) {
         guardarTarea(ev, contenedor, inputFecha, inputNombre, textareaDec));
     contenedor.appendChild(form);
 }
-//Guardar la tarea en localStorage en una clave unica
-function guardarTarea(ev, contenedor, inputFecha, inputNombre, textareaDec){
-    ev.preventDefault();
-    //inicio de localstorage
-    //crear objeto tarea
-    const tarea = {
-        fecha: inputFecha.value,
-        nombre: inputNombre.value,
-        descripcion: textareaDec.value,
-        completada: false,
-    };
-    //calcular el proximo indice
-    const numTareas = Object.keys(localStorage)
-    .filter((k)=>k.startsWith("tarea"))
-    .length + 1;
 
-    const clave = "tarea" + numTareas;
-    //guardar en localStorage
-    localStorage.setItem(clave, JSON.stringify(tarea));
-    alert(`Tarea guardada correctamente como ${clave}`);
-    //limpiar formulario y ocultar el contenedor 
-    ev.target.reset();
-    contenedor.innerHTML = "";
-}
 //inicializa los eventos al cargar la pagina
 function inicializar() {
     const btnRegistrar = document.getElementById("btnRegistrar");
@@ -86,7 +63,7 @@ function inicializar() {
 }
 //inicio
 inicializar();
-//visualizar las tareas registradas y orden cronologico
+
 // Función para guardar una tarea en localStorage
 function guardarTarea(ev, contenedor, inputFecha, inputNombre, textareaDec) {
     ev.preventDefault();
@@ -116,7 +93,7 @@ function guardarTarea(ev, contenedor, inputFecha, inputNombre, textareaDec) {
     // Actualizar la visualización de tareas
     mostrarTareas();
 }
-
+//visualizar las tareas registradas y orden cronologico
 // Función para mostrar las tareas ordenadas por fecha
 function mostrarTareas() {
     // Crear o seleccionar el contenedor donde mostrar las tareas
@@ -139,20 +116,38 @@ function mostrarTareas() {
 
     // Mostrar cada tarea
     tareas.forEach((tarea, index) => {
-        const div = document.createElement("div");
-        div.style.border = "1px solid #ccc";
-        div.style.margin = "5px";
-        div.style.padding = "5px";
+    const div = document.createElement("div");
+    div.style.border = "1px solid #ccc";
+    div.style.margin = "5px";
+    div.style.padding = "5px";
 
-        div.innerHTML = `
-            <strong>Fecha:</strong> ${tarea.fecha} <br>
-            <strong>Nombre:</strong> ${tarea.nombre} <br>
-            <strong>Descripción:</strong> ${tarea.descripcion} <br>
-            <strong>Completada:</strong> ${tarea.completada ? "Sí" : "No"}
-        `;
+    div.innerHTML = `
+        <strong>Fecha:</strong> ${tarea.fecha} <br>
+        <strong>Nombre:</strong> ${tarea.nombre} <br>
+        <strong>Descripción:</strong> ${tarea.descripcion} <br>
+        <strong>Completada:</strong> ${tarea.completada ? "Sí" : "No"}
+    `;
 
-        contenedorTareas.appendChild(div);
+    contenedorTareas.appendChild(div);
+
+    // crea el boton de eliminar en cada una de las tareas
+    const btnEliminar = document.createElement("button");
+    btnEliminar.type = "button";
+    btnEliminar.textContent = "Eliminar";
+
+    // acción que hace el boton de eliminar
+    btnEliminar.addEventListener("click", () => {
+        const claves = Object.keys(localStorage).filter((clave) =>
+            clave.startsWith("tarea")
+        );
+        // Eliminar la tarea correspondiente
+        localStorage.removeItem(claves[index]);
+        mostrarTareas(); // actualizar la lista
     });
+
+    div.appendChild(btnEliminar);
+});
+   
 }
 
 // Inicializar eventos y mostrar tareas al cargar la página
@@ -172,6 +167,6 @@ function inicializar() {
 inicializar();
 
 //diferenciar las tareas completadas y las pendientes
-//elimar tareas
+
 //buscador de tareas
-//total de tareas completadas y pendientes
+//total de tareas completadas y pendientes
