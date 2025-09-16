@@ -104,12 +104,14 @@ function mostrarTareas(filtro = "") {//se agrego el parametro
         document.body.appendChild(contenedorTareas);
     }
 
-    contenedorTareas.innerHTML = ""; // Limpiar contenido previo
+    contenedorTareas.innerHTML = ""; // Limpiar contenido 
 
     // Obtener todas las tareas de localStorage
     let tareas = Object.keys(localStorage)
         .filter((clave) => clave.startsWith("tarea"))
-        .map((clave) => JSON.parse(localStorage.getItem(clave)));
+       //se cambia esto para que cada tarea sea un objeto que incluye su clave.para el check
+        .map((clave) => ({ clave, ...JSON.parse(localStorage.getItem(clave)) }));
+
 
     // Ordenar por fecha (de más antigua a más reciente)
     tareas.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
@@ -132,9 +134,22 @@ function mostrarTareas(filtro = "") {//se agrego el parametro
         <strong>Fecha:</strong> ${tarea.fecha} <br>
         <strong>Nombre:</strong> ${tarea.nombre} <br>
         <strong>Descripción:</strong> ${tarea.descripcion} <br>
-        <strong>Completada:</strong> ${tarea.completada ? "Sí" : "No"}
-    `;
+        
+    `//de aqui se elimino el texto plano
+    ;
+    // Crear el checkbox de completada
+const checkbox = document.createElement("input");
+checkbox.type = "checkbox";
+checkbox.checked = tarea.completada; // refleja el estado guardado
+checkbox.id = `check-${tarea.clave}`; // id único para accesibilidad
 
+// Crear etiqueta asociada al checkbox
+const labelCheck = document.createElement("label");
+labelCheck.htmlFor = checkbox.id;
+labelCheck.textContent = "Completada";
+//para que se muestre el check
+     div.appendChild(labelCheck);
+    div.appendChild(checkbox);
     contenedorTareas.appendChild(div);
 
     // crea el boton de eliminar en cada una de las tareas
