@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Memorama</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+ <header class="header">
+    <h1>Memorama</h1>
+    <p class="lead">Encuentra todas las parejas lo más rápido posible</p>
+  </header>
+
+  <main class="container">
+    <section class="controls" aria-label="Controles del juego">
+      <div class="control-row">
+        <label for="difficulty">Dificultad</label>
+        <select id="difficulty" aria-controls="game-board">
+          <option value="4">4 x 4</option>
+          <option value="6">6 x 6</option>
+          <option value="10">10 x 10</option>
+        </select>
+        <button id="new-game">Nuevo juego</button>
+      </div>
+
+      <div class="stats" aria-live="polite">
+        <div>Intentos: <span id="attempts">0</span></div>
+        <div>Tiempo: <span id="timer">00:00</span></div>
+      </div>
+
+      <div class="best-scores">
+        <h2>Mejores resultados</h2>
+        <ul id="best-list">
+          <!-- rellenado por JS -->
+        </ul>
+      </div>
+    </section>
+
+    <section class="game" aria-label="Tablero de juego">
+      <div id="game-board" class="board" role="grid"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>Hecho con ❤️ — Buenas prácticas: HTML, CSS, JS separados; accesibilidad básica y almacenamiento local.</small>
+  </footer>
+
+  <script src="js/index.js" defer></script>
+
+</body>
+
+</html>
