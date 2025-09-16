@@ -122,6 +122,27 @@ function mostrarTareas(filtro = "") {//se agrego el parametro
             tarea.descripcion.toLowerCase().includes(filtro)
         );
     }
+    //contadores
+    // Contadores
+    const total = tareas.length;
+    const completadas = tareas.filter(t => t.completada).length;
+    const pendientes = total - completadas;
+    // Crear resumen
+    const resumen = document.createElement("div");
+    resumen.innerHTML = `
+        <h3>Resumen de tareas</h3>
+        <p><strong>Total:</strong> ${total}</p>
+        <p><strong>Completadas:</strong> ${completadas}</p>
+        <p><strong>Pendientes:</strong> ${pendientes}</p>
+    `;
+    contenedorTareas.appendChild(resumen)
+    // Secciones
+    const secPendientes = document.createElement("div");
+    const secCompletadas = document.createElement("div");
+
+    secPendientes.innerHTML = "<h3>📌 Tareas Pendientes</h3>";
+    secCompletadas.innerHTML = "<h3>✅ Tareas Completadas</h3>";
+
 
     // Mostrar cada tarea
     tareas.forEach((tarea, index) => {
@@ -156,11 +177,14 @@ labelCheck.textContent = "Completada";
     checkbox.addEventListener("change", () => {
     // aqui se Actualizo el valor en el objeto
     tarea.completada = checkbox.checked;
+     mostrarTareas(); // Actualiza la lista y los contadores en tiempo real
 
     // aqui se Guarda otra vez en localStorage con la misma clave
     localStorage.setItem(tarea.clave, JSON.stringify(tarea));
 
 });
+   
+    
 
 
     // crea el boton de eliminar en cada una de las tareas
@@ -234,8 +258,3 @@ function inicializar() {
 
 // Llamar a inicializar al cargar el script
 inicializar();
-
-//diferenciar las tareas completadas y las pendientes
-
-
-//total de tareas completadas y pendientes
