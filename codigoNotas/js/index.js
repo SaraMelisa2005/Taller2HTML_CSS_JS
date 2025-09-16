@@ -152,6 +152,17 @@ labelCheck.textContent = "Completada";
     div.appendChild(checkbox);
     contenedorTareas.appendChild(div);
 
+    //para que se escuche el evento del check
+    checkbox.addEventListener("change", () => {
+    // aqui se Actualizo el valor en el objeto
+    tarea.completada = checkbox.checked;
+
+    // aqui se Guarda otra vez en localStorage con la misma clave
+    localStorage.setItem(tarea.clave, JSON.stringify(tarea));
+
+});
+
+
     // crea el boton de eliminar en cada una de las tareas
     const btnEliminar = document.createElement("button");
     btnEliminar.type = "button";
