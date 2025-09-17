@@ -4,7 +4,7 @@ function crearFormulario(contenedor) {
 
     //Titulo
     const h1 = document.createElement("h1");
-    h1.textContent = "Bienvenidos al historial de sus tareas";
+    h1.textContent = "Bienvenido registre su tarea ;)";
     contenedor.appendChild(h1);
 
     //Formulario
@@ -93,6 +93,7 @@ function guardarTarea(ev, contenedor, inputFecha, inputNombre, textareaDec) {
     // Actualizar la visualización de tareas
     mostrarTareas();
 }
+
 //visualizar las tareas registradas y orden cronologico
 // Función para mostrar las tareas ordenadas por fecha
 function mostrarTareas(filtro = "") {//se agrego el parametro
@@ -109,24 +110,25 @@ function mostrarTareas(filtro = "") {//se agrego el parametro
     // Obtener todas las tareas de localStorage
     let tareas = Object.keys(localStorage)
         .filter((clave) => clave.startsWith("tarea"))
-       //se cambia esto para que cada tarea sea un objeto que incluye su clave.para el check
+        //se cambia esto para que cada tarea sea un objeto que incluye su clave.para el check
         .map((clave) => ({ clave, ...JSON.parse(localStorage.getItem(clave)) }));
-
 
     // Ordenar por fecha (de más antigua a más reciente)
     tareas.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
-    // // Filtrar si hay texto de búsqueda
+
+    // Filtrar si hay texto de búsqueda
     if (filtro) {
         tareas = tareas.filter((tarea) =>
             tarea.nombre.toLowerCase().includes(filtro) ||
             tarea.descripcion.toLowerCase().includes(filtro)
         );
     }
+
     //contadores
-    // Contadores
     const total = tareas.length;
     const completadas = tareas.filter(t => t.completada).length;
     const pendientes = total - completadas;
+
     // Crear resumen
     const resumen = document.createElement("div");
     resumen.innerHTML = `
@@ -135,77 +137,79 @@ function mostrarTareas(filtro = "") {//se agrego el parametro
         <p><strong>Completadas:</strong> ${completadas}</p>
         <p><strong>Pendientes:</strong> ${pendientes}</p>
     `;
-    contenedorTareas.appendChild(resumen)
+    contenedorTareas.appendChild(resumen);
+
     // Secciones
     const secPendientes = document.createElement("div");
     const secCompletadas = document.createElement("div");
-
     secPendientes.innerHTML = "<h3>📌 Tareas Pendientes</h3>";
     secCompletadas.innerHTML = "<h3>✅ Tareas Completadas</h3>";
 
-
     // Mostrar cada tarea
     tareas.forEach((tarea, index) => {
-    const div = document.createElement("div");
-    div.style.border = "1px solid #ccc";
-    div.style.margin = "5px";
-    div.style.padding = "5px";
+        // Cada tarea tendrá la clase .tarea para aplicar los estilos del CSS
+        const div = document.createElement("div");
+        div.classList.add("tarea"); // 👈 se aplica el estilo con borde, margen y sombra
 
-    div.innerHTML = `
-        <strong>Fecha:</strong> ${tarea.fecha} <br>
-        <strong>Nombre:</strong> ${tarea.nombre} <br>
-        <strong>Descripción:</strong> ${tarea.descripcion} <br>
-        
-    `//de aqui se elimino el texto plano
-    ;
-    // Crear el checkbox de completada
-const checkbox = document.createElement("input");
-checkbox.type = "checkbox";
-checkbox.checked = tarea.completada; // refleja el estado guardado
-checkbox.id = `check-${tarea.clave}`; // id único para accesibilidad
+        div.innerHTML = `
+            <strong>Fecha:</strong> ${tarea.fecha} <br>
+            <strong>Nombre:</strong> ${tarea.nombre} <br>
+            <strong>Descripción:</strong> ${tarea.descripcion} <br>
+        `;
 
-// Crear etiqueta asociada al checkbox
-const labelCheck = document.createElement("label");
-labelCheck.htmlFor = checkbox.id;
-labelCheck.textContent = "Completada";
-//para que se muestre el check
-     div.appendChild(labelCheck);
-    div.appendChild(checkbox);
-    contenedorTareas.appendChild(div);
+        // Crear el contenedor de acciones (checkbox + eliminar)
+        const acciones = document.createElement("div");
+        acciones.classList.add("acciones");
 
-    //para que se escuche el evento del check
-    checkbox.addEventListener("change", () => {
-    // aqui se Actualizo el valor en el objeto
-    tarea.completada = checkbox.checked;
-     mostrarTareas(); // Actualiza la lista y los contadores en tiempo real
+        // Crear el checkbox de completada
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = tarea.completada; // refleja el estado guardado
+        checkbox.id = `check-${tarea.clave}`; // id único para accesibilidad
 
-    // aqui se Guarda otra vez en localStorage con la misma clave
-    localStorage.setItem(tarea.clave, JSON.stringify(tarea));
+        // Crear etiqueta asociada al checkbox
+        const labelCheck = document.createElement("label");
+        labelCheck.htmlFor = checkbox.id;
+        labelCheck.textContent = "Completada";
 
-});
-   
-    
+        //para que se escuche el evento del check
+        checkbox.addEventListener("change", () => {
+            // aqui se Actualizo el valor en el objeto
+            tarea.completada = checkbox.checked;
+            mostrarTareas(); // Actualiza la lista y los contadores en tiempo real
 
+            // aqui se Guarda otra vez en localStorage con la misma clave
+            localStorage.setItem(tarea.clave, JSON.stringify(tarea));
+        });
 
-    // crea el boton de eliminar en cada una de las tareas
-    const btnEliminar = document.createElement("button");
-    btnEliminar.type = "button";
-    btnEliminar.textContent = "Eliminar";
+        // crea el boton de eliminar en cada una de las tareas
+        const btnEliminar = document.createElement("button");
+        btnEliminar.type = "button";
+        btnEliminar.textContent = "Eliminar";
 
-    // acción que hace el boton de eliminar
-    btnEliminar.addEventListener("click", () => {
-        const claves = Object.keys(localStorage).filter((clave) =>
-            clave.startsWith("tarea")
-        );
-        // Eliminar la tarea correspondiente
-        localStorage.removeItem(claves[index]);
-        mostrarTareas(); // actualizar la lista
+        // acción que hace el boton de eliminar
+        btnEliminar.addEventListener("click", () => {
+            const claves = Object.keys(localStorage).filter((clave) =>
+                clave.startsWith("tarea")
+            );
+            // Eliminar la tarea correspondiente
+            localStorage.removeItem(claves[index]);
+            mostrarTareas(); // actualizar la lista
+        });
+
+        // Agregar checkbox, label y botón dentro del contenedor acciones
+        acciones.appendChild(labelCheck);
+        acciones.appendChild(checkbox);
+        acciones.appendChild(btnEliminar);
+
+        // Agregar acciones al div principal de la tarea
+        div.appendChild(acciones);
+
+        // Finalmente añadir la tarea al contenedor general
+        contenedorTareas.appendChild(div);
     });
-
-    div.appendChild(btnEliminar);
-});
-   
 }
+
 //funcion crear barra de busquedas por nombre
 function crearBuscador() {
     // Verificar si ya existe para no duplicarlo
@@ -218,7 +222,7 @@ function crearBuscador() {
 
     // Título
     const titulo = document.createElement("h2");
-    titulo.textContent = "Buscar tareas";
+    titulo.innerHTML = '<span class="animar">Buscar tarea</span>';
 
     // Input de búsqueda
     const inputBuscar = document.createElement("input");
@@ -239,21 +243,19 @@ function crearBuscador() {
     });
 }
 
-
 // Inicializar eventos y mostrar tareas al cargar la página
 function inicializar() {
     const btnRegistrar = document.getElementById("btnRegistrar");
     const contenedor = document.getElementById("contenedorFormulario");
-    
+
     btnRegistrar.addEventListener("click", () => {
         crearFormulario(contenedor);
     });
     //llama a la funcion buscar
-    crearBuscador();   
+    crearBuscador();
 
     // Mostrar tareas guardadas al cargar la página
     mostrarTareas();
-    
 }
 
 // Llamar a inicializar al cargar el script
