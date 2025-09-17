@@ -1,0 +1,210 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+#btnRegistrar {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+}
+
+#btnRegistrar:hover {
+    background-color: #45a049;
+}
+
+#contenedorFormulario {
+    max-width: 600px;
+    margin: 0 auto 30px auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+#contenedorFormulario h1 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #4CAF50;
+}
+
+#formTarea label {
+    display: block;
+    font-weight: 600;
+    margin-top: 15px;
+    color: #444;
+}
+
+#formTarea input,
+#formTarea textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #fafafa;
+}
+
+#formTarea textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+#formTarea button[type="submit"] {
+    display: block;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+#formTarea button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+#contenedorBuscador {
+    max-width: 600px;
+    margin: 0 auto 20px auto;
+    text-align: center;
+}
+
+#contenedorBuscador h2 {
+    color: #4CAF50;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+
+#contenedorBuscador input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#contenedorTareas {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#contenedorTareas>div:first-child {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+#contenedorTareas h3 {
+    color: #4CAF50;
+    margin-bottom: 10px;
+}
+
+
+#contenedorTareas .tarea {
+    background: #fff;
+    border-left: 5px solid #4CAF50;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease;
+}
+
+#contenedorTareas .tarea:hover {
+    transform: translateY(-2px);
+}
+
+#contenedorTareas .tarea strong {
+    display: inline-block;
+    width: 100px;
+    font-weight: 600;
+    color: #555;
+}
+
+#contenedorTareas .acciones {
+    margin-top: 10px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+#contenedorTareas .acciones label {
+    font-weight: 500;
+    color: #333;
+}
+
+#contenedorTareas .acciones input[type="checkbox"] {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+#contenedorTareas .acciones button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#contenedorTareas .acciones button:hover {
+    background-color: #c0392b;
+}
+
+@media (max-width: 600px) {
+
+    #contenedorFormulario,
+    #contenedorBuscador,
+    #contenedorTareas {
+        padding: 0 10px;
+    }
+
+    #formTarea button[type="submit"] {
+        font-size: 14px;
+    }
+
+    #btnRegistrar {
+        width: 100%;
+    }
+}
+@keyframes bote {
+  0%   { transform: translateY(0); }
+  30%  { transform: translateY(-15px); }
+  50%  { transform: translateY(0); }
+  70%  { transform: translateY(-7px); }
+  100% { transform: translateY(0); }
+}
+
+.animar {
+  display: inline-block;
+  font-weight: bold;
+  color: #4CAF50;
+  animation: bote 1.2s ease-in-out infinite;
+}
