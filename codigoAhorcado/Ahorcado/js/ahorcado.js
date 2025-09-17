@@ -28,4 +28,21 @@ request.onupgradeneeded = function (event) {
     db.createObjectStore("palabras", { keyPath: "id", autoIncrement: true });
     db.createObjectStore("historial", { keyPath: "id", autoIncrement: true });
 };
+// Guardar en IndexDB
+function guardarPalabras(lista) {
+    return new Promise((resolve) => {
+        let tx = db.transaction("palabras", "readwrite");
+        let store = tx.objectStore("palabras");
+
+        store.clear();
+
+        lista.forEach((p, i) => {
+            store.add({ id: i+1, texto: p.toUpperCase() });
+        });
+
+        tx.oncomplete = () => {
+            resolve();
+        };
+    });
+}
 
