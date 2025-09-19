@@ -162,3 +162,66 @@ let botones = document.querySelectorAll(".botones button");
             });
         });
 
+function validarJuego(palabra, boton) {
+    let letra = boton.textContent;
+    let opcion = document.getElementById("btn" + letra);
+    let imagen = document.querySelector(".ahorcado");
+    let letras_usadas = document.querySelector(".letras_usadas");
+    letras_usadas.value += letra + " ";
+    if (palabra.includes(letra) === true) {
+        let letras = document.querySelectorAll(".letra");
+        letras.forEach((l, i) => {
+            if (palabra[i] === letra) {
+                l.style.visibility = "visible";
+                contEncontrado++;
+                if (contEncontrado === palabra.replace(/ /g, "").length) {
+                    resultadoJuego("¡GANASTE!");
+                }
+            }
+        });         
+    } else {
+        contNoEncontrado++;
+        imagen.src = "recursos/" + contNoEncontrado + ".jpg";
+        if (contNoEncontrado === 10) {
+            resultadoJuego("¡PERDISTE!");
+        }
+    }
+    opcion.disabled = true;
+}
+
+function resultadoJuego(mensaje) {
+    let resultado = document.getElementById("resultado");
+    resultado.style.visibility = "visible";
+    resultado.textContent = mensaje;
+    resultado.classList.remove("ganar", "perder");
+    let respuesta = "Derrota";
+    if (mensaje === "¡GANASTE!") {
+        resultado.classList.add("ganar");
+        respuesta = "Victoria";
+    } else if (mensaje === "¡PERDISTE!") {
+        resultado.classList.add("perder");
+    }
+    let botones = document.querySelectorAll(".botones button");
+    botones.forEach((btn) => {
+        btn.disabled = true;
+    });
+    guardarHistorial(respuesta);
+}
+
+document.getElementById("btnNuevo").addEventListener("click", async () => {
+    contNoEncontrado = contEncontrado = 0;
+    let imagen = document.querySelector(".ahorcado");
+    imagen.src = "recursos/0.jpg";
+    let letras_usadas = document.querySelector(".letras_usadas");
+    letras_usadas.value = "";
+    let resultado = document.getElementById("resultado");
+    resultado.style.visibility = "hidden";
+    let botones = document.querySelectorAll(".botones button");
+    botones.forEach((btn) => {
+        btn.disabled = false;
+    });
+    let posicion = Math.floor(Math.random() * (palabras.length)) + 1;
+    await buscarPalabra(posicion);
+    mostrarEspacios(palabra);
+});
+
