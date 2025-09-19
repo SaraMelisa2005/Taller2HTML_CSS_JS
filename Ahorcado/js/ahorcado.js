@@ -116,4 +116,49 @@ request.onsuccess = async function (event) {
     mostrarEspacios(palabra);
     mostrarHistorialMarcador();
 };
+function mostrarEspacios(oculta) {
+    let espacios = document.querySelector(".espacios");
+    espacios.innerHTML = "";
+
+    for (let i = 0; i < oculta.length; i++) {
+        let labelEspacio = document.createElement("label");
+        labelEspacio.className = "espacio";
+        if (oculta[i] === " ") {
+            labelEspacio.textContent = " "; // espacio en blanco
+        } else {
+            labelEspacio.textContent = "_";   // el guion bajo base
+        }
+
+        let labelLetra = document.createElement("label");
+        labelLetra.className = "letra";
+        labelLetra.textContent = oculta[i]; // letra oculta
+
+        labelEspacio.appendChild(labelLetra);
+
+        espacios.appendChild(labelEspacio);
+    }
+}
+
+function buscarPalabra(id) {
+    return new Promise((resolve) => {
+        let tx = db.transaction("palabras", "readonly");
+        let store = tx.objectStore("palabras");
+
+        let req = store.get(id);
+
+        req.onsuccess = () => {
+            if (req.result) {
+                palabra = req.result.texto;
+                resolve();
+            }
+        };
+    });
+}
+
+let botones = document.querySelectorAll(".botones button");
+        botones.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                validarJuego(palabra, btn);
+            });
+        });
 
