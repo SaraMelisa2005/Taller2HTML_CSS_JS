@@ -1,2 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ahorcado</title>
+    <link rel="stylesheet" href="css/ahorcado.css">
+</head>
+<body>
+    <h1>JUEGO DEL AHORCADO</h1>
+    <h3>Programación avanzada</h3>
+    <button id="btnNuevo">Nuevo Juego</button>
+    <div class="espacios">
 
-
+    </div>
+    <div class="botones">
+        <div class="fila1">
+            <button id="btnA" class="letra_opcion">A</button>
+            <button id="btnB" class="letra_opcion">B</button>
+            <button id="btnC" class="letra_opcion">C</button>
+            <button id="btnD" class="letra_opcion">D</button>
+            <button id="btnE" class="letra_opcion">E</button>
+            <button id="btnF" class="letra_opcion">F</button>
+            <button id="btnG" class="letra_opcion">G</button>
+            <button id="btnH" class="letra_opcion">H</button>
+            <button id="btnI" class="letra_opcion">I</button>
+            <button id="btnJ" class="letra_opcion">J</button>
+            <button id="btnK" class="letra_opcion">K</button>
+            <button id="btnL" class="letra_opcion">L</button>
+            <button id="btnM" class="letra_opcion">M</button>
+            <button id="btnN" class="letra_opcion">N</button>
+        </div>
+        <div class="fila2">
+            <button id="btnÑ" class="letra_opcion">Ñ</button>
+            <button id="btnO" class="letra_opcion">O</button>
+            <button id="btnP" class="letra_opcion">P</button>
+            <button id="btnQ" class="letra_opcion">Q</button>
+            <button id="btnR" class="letra_opcion">R</button>
+            <button id="btnS" class="letra_opcion">S</button>
+            <button id="btnT" class="letra_opcion">T</button>
+            <button id="btnU" class="letra_opcion">U</button>
+            <button id="btnV" class="letra_opcion">V</button>
+            <button id="btnW" class="letra_opcion">W</button>
+            <button id="btnX" class="letra_opcion">X</button>
+            <button id="btnY" class="letra_opcion">Y</button>
+            <button id="btnZ" class="letra_opcion">Z</button>
+        </div>
+    </div>
+    <label for="victorias" id="label_victorias">VICTORIAS:</label>
+    <label id="victorias">0</label>
+    <label for="derrotas" id="label_derrotas">DERROTAS:</label>
+    <label id="derrotas">0</label>
+    <label id="resultado"></label>
+    <img class="ahorcado">
+    <div class="titulo_letras_usadas">LETRAS USADAS:</div>
+    <textarea class="letras_usadas" readonly></textarea>
+    <div class="titulo_historial">HISTORIAL</div>
+    <div class="historial">
+        <table id="historial">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Fecha</th>
+                    <th>Resultado</th>
+                </tr>
+            </thead>
+            <tbody id="datos_historial">
+            </tbody>
+        </table>
+    </div>
+</body>
+<script src="js/ahorcado.js"></script>
+</html>
