@@ -58,4 +58,62 @@ function guardarHistorial(resultado) {
         mostrarHistorialMarcador();
     };
 }
+function mostrarHistorialMarcador() {
+    let datos_historial = document.getElementById('datos_historial');
+    datos_historial.innerHTML = ""; // limpiar antes de mostrar
+
+    let tx = db.transaction("historial", "readonly");
+    let store = tx.objectStore("historial");
+    let victorias = document.getElementById('victorias');
+    let derrotas = document.getElementById('derrotas');
+    let v = 0;
+    let d = 0;
+
+    let req = store.getAll();
+
+    req.onsuccess = () => {
+        let registros = req.result;
+        registros.forEach(r => {
+            let fila = document.createElement("tr");
+
+            let tdNum = document.createElement("td");
+            tdNum.classList.add("td1");
+            tdNum.textContent = r.id;
+            
+            let tdFecha = document.createElement("td");
+            tdFecha.classList.add("td2");
+            tdFecha.textContent = r.fecha;
+
+            let tdResultado = document.createElement("td");
+            tdResultado.classList.add("td3");
+            tdResultado.textContent = r.resultado;
+
+            fila.appendChild(tdNum);
+            fila.appendChild(tdFecha);
+            fila.appendChild(tdResultado);
+
+            datos_historial.appendChild(fila);
+
+            if (r.resultado === "Victoria") {
+                v++;
+            }
+            else {
+                d++;
+            }
+        });
+        victorias.textContent = `${v}`;
+        derrotas.textContent = `${d}`;
+    };
+}
+
+// Al abrir indexDB
+request.onsuccess = async function (event) {
+    db = event.target.result;
+    await guardarPalabras(palabras);
+
+    let posicion = Math.floor(Math.random() * (palabras.length)) + 1;
+    await buscarPalabra(posicion);
+    mostrarEspacios(palabra);
+    mostrarHistorialMarcador();
+};
 
